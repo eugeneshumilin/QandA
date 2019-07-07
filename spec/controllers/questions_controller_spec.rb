@@ -8,7 +8,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :index }
 
-
     it 'should populate an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -20,10 +19,6 @@ RSpec.describe QuestionsController, type: :controller do
 
   describe 'GET #new' do
     before { get :new }
-
-    it 'should assign a new question to @question' do
-      expect(assigns(:question)).to be_a_new(Question)
-    end
 
     it 'should render new view' do
       expect(response).to render_template :new
