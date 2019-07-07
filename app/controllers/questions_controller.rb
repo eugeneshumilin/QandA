@@ -1,11 +1,9 @@
 class QuestionsController < ApplicationController
-
   def index
     @questions = Question.all
   end
 
-  def show
-  end
+  def show;end
 
   def new
     @question = Question.new
@@ -26,4 +24,10 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body)
   end
+
+  def question
+    @question ||= params[:id] ? Question.find(params[:id]) : Question.new
+  end
+
+  helper_method :question
 end

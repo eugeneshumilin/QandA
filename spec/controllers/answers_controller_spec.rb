@@ -38,6 +38,5 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :new
       end
     end
-    
   end
 end
