@@ -9,11 +9,11 @@ RSpec.describe QuestionsController, type: :controller do
     before { get :index }
 
 
-    it 'populates an array of all questions' do
+    it 'should populate an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
 
-    it 'renders index view' do
+    it 'should render index view' do
       expect(response).to render_template :index
     end
   end
@@ -21,22 +21,22 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #new' do
     before { get :new }
 
-    it 'assigns a new question to @question' do
+    it 'should assign a new question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
 
-    it 'renders new template' do
+    it 'should render new view' do
       expect(response).to render_template :new
     end
   end
 
   describe 'POST #create' do
     context 'with valid attributes' do
-      it 'saves a new question in database' do
+      it 'should save a new question in database' do
         expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
-      it 'redirects to show view' do
+      it 'should redirect to show view' do
         post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
@@ -44,11 +44,11 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with in-valid attributes' do
-      it 'does not save the question' do
+      it 'should not be saved in database' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
 
-      it 're-render new view' do
+      it 'should re-render new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
       end
