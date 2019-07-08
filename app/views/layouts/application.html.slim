@@ -9,5 +9,17 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
 
   body
+    p.notice
+      = notice
+    p.alert
+      = alert
+
+    - if user_signed_in?
+      p= current_user.email
+      p= link_to 'Log out', destroy_user_session_path, method: :delete
+    - else
+      p= link_to 'Sign in', new_user_session_path
+      p= link_to 'Sign up', new_user_registration_path
+
     = render 'shared/flash'
     = yield
