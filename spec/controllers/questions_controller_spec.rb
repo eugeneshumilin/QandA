@@ -92,7 +92,7 @@ RSpec.describe QuestionsController, type: :controller do
         @another_question = create(:question, user: @another_user)
       end
 
-      it 'should delete question' do
+      it 'should not delete question' do
         expect {
           expect { delete :destroy, params: { id: @another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
         }.to_not change(Question, :count)

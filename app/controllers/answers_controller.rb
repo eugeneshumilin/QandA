@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create]
+  before_action :authenticate_user!, only: [:create, :destroy]
   before_action :load_question, only: [:create]
   before_action :load_current_user_answer, only: [:destroy]
 
@@ -12,6 +12,12 @@ class AnswersController < ApplicationController
     else
       render 'questions/show'
     end
+  end
+
+  def destroy
+    current_question = @answer.question
+    @answer.destroy
+    redirect_to current_question, notice: 'Answer was successfully deleted'
   end
 
   private

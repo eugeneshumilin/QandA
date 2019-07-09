@@ -34,4 +34,33 @@ RSpec.describe AnswersController, type: :controller do
       expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(user.answers, :count).by(1)
     end
   end
+
+  describe 'DELETE #destroy' do
+    before { login(user) }
+
+    context 'user tries to delete own answer' do
+      it 'should delete answer' do
+        answer
+        expect { delete :destroy, params: { id: answer } }.to change(Answer, :count).by(-1)
+      end
+
+      it 'should redirect to show view' do
+        delete :destroy, params: { id: answer }
+        expect(response).to redirect_to question_path(answer.question)
+      end
+    end
+
+    context "user tries to delete someone else's answer" do
+      before do
+        @another_user = create(:user)
+        @another_answer = create(:answer, question: question, user: @another_user)
+      end
+
+      it 'should not delete answer' do
+        expect {
+          expect { delete :destroy, params: { id: @another_answer } }.to raise_exception(ActiveRecord::RecordNotFound)
+        }.to_not change(Answer, :count)
+      end
+    end
+  end
 end
