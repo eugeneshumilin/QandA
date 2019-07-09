@@ -5,7 +5,7 @@ feature 'user can create answer', %q{
   authenticated user can create answer
 } do
   given(:user) { create(:user) }
-  given!(:question) { create(:question) }
+  given!(:question) { create(:question, user: user) }
 
   describe  do
     background do

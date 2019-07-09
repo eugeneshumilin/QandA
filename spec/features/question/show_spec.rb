@@ -4,8 +4,9 @@ feature "user can view question and question's answers", %q{
   In order to find answer
   user can view question and all question's answers
 } do
-  given(:question) { create(:question) }
-  given(:answer) { create(:answer, question: question) }
+  given(:user) { create (:user) }
+  given(:question) { create(:question, user: user) }
+  given(:answer) { create(:answer, question: question, user: user) }
 
   scenario 'user tries to view question' do
     visit question_path(question)

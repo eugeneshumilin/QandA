@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) { create(:question) }
   let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
 
   describe 'GET #index' do
-    let(:questions) { create_list(:question, 3) }
+    let(:questions) { create_list(:question, 3, user: user) }
 
     before { get :index }
 
@@ -63,6 +63,35 @@ RSpec.describe QuestionsController, type: :controller do
       it 'should re-render new view' do
         post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    before { login(user) }
+
+    context 'user tries to delete own question' do
+      it 'should delete question' do
+        question
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'should redirect to index view' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context "user tries to delete someone else's question" do
+      before do
+        @another_user = create(:user)
+        @another_question = create(:question, user: @another_user)
+      end
+
+      it 'should delete question' do
+        expect {
+          expect { delete :destroy, params: { id: @another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
+        }.to_not change(Question, :count)
       end
     end
   end
