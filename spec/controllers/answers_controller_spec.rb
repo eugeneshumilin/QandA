@@ -26,8 +26,12 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'should re-render a question show view' do
         post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }
-        expect(response).to redirect_to question_path(assigns(:question))
+        expect(response).to render_template 'questions/show'
       end
+    end
+
+    it 'should associated with user' do
+      expect { post :create, params: { question_id: question, answer: attributes_for(:answer) } }.to change(user.answers, :count).by(1)
     end
   end
 end

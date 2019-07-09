@@ -8,10 +8,11 @@ feature 'user can view list of questions', %q{
   given!(:questions) { create_list(:question, 3, user: user) }
 
   scenario 'user tries to view list of question' do
+    sign_in(user)
     visit questions_path
 
-    expect(page).to have_content questions[0].title
-    expect(page).to have_content questions[1].title
-    expect(page).to have_content questions[2].title
+    questions.each do |question|
+      expect(page).to have_content question.title
+    end
   end
 end
