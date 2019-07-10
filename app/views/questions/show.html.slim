@@ -1,0 +1,15 @@
+h1= @question.title
+p= @question.body
+
+
+- @question.answers.each do |answer|
+  p= answer.body
+  - if @answers.present? && current_user&.author_of?(answer)
+    p= link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}
+
+= form_with model: [@question, @answer], local: true do |f|
+  = render 'shared/errors', resource: @answer
+
+  = f.label :body
+  = f.text_area :body
+  = f.submit 'Reply'
