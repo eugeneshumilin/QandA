@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
+  let(:another_user) { create(:user) }
   let(:question) { create(:question, user: user) }
+  let(:another_question) { create(:question, user: another_user ) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, user: user) }
@@ -87,14 +89,10 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context "user tries to delete someone else's question" do
-      before do
-        @another_user = create(:user)
-        @another_question = create(:question, user: @another_user)
-      end
-
       it 'should not delete question' do
+        another_question
         expect {
-          expect { delete :destroy, params: { id: @another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
+          expect { delete :destroy, params: { id: another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
         }.to_not change(Question, :count)
       end
     end
