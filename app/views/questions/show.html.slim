@@ -8,18 +8,16 @@ br
 
 .answers
   ul.list-group.list-group-flush.text-center
-    - @question.answers.each do |answer|
-      li.list-group-item
-        h4 = answer.body
-        - if @answers.present? && current_user&.author_of?(answer)
-          = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}
+    li.list-group-item.answer-item = render @question.answers
+
+
 
 br
 
 
-= form_with model: [@question, @answer], class: 'form-group', local: true do |f|
-  = render 'shared/errors', resource: @answer
+.answer-errors
 
+= form_with model: [@question, @answer], class: 'form-group' do |f|
   = f.label :body
   = f.text_area :body, class: 'form-control'
   br
