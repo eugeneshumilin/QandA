@@ -1,4 +1,4 @@
-li.list-group-item.answer-item
+li.list-group-item
   h4 = answer.body
   - if current_user&.author_of?(answer)
     = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}

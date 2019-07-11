@@ -13,7 +13,7 @@ feature 'user can create answer', %q{
       visit question_path(question)
     end
 
-    scenario 'authenticated user tries to create answer with valid attributes' do
+    scenario 'authenticated user tries to create answer with valid attributes', js: true do
       fill_in 'Body', with: 'Test answer'
       click_on 'Reply'
 
