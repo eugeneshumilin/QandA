@@ -17,7 +17,7 @@ class AnswersController < ApplicationController
   def destroy
     current_question = @answer.question
     @answer.destroy
-    redirect_to current_question, notice: 'Answer was successfully deleted'
+    redirect_to current_question, alert: 'Answer was successfully deleted'
   end
 
   private
