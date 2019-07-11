@@ -1,0 +1,12 @@
+nav
+  .container
+    .navbar.navbar-expand-lg.navbar-light.bg-light
+      = link_to 'Q&A', root_path, class: 'navbar-brand'
+      .collapse.navbar-collapse
+        ul.navbar-nav
+          - if user_signed_in?
+            li.nav-item.nav-link = current_user.email
+            li.nav-item = link_to 'Log out', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            li.nav-item = link_to 'Sign in', new_user_session_path, class: 'nav-link'
+            li.nav-item = link_to 'Sign up', new_user_registration_path, class: 'nav-link'
