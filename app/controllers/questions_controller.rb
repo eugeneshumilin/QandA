@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show]
+  before_action :load_question, only: [:show, :update]
   before_action :load_current_user_question, only: [:destroy]
 
   def index
@@ -10,6 +10,10 @@ class QuestionsController < ApplicationController
   def show
     @answers = Answer.all
     @answer = Answer.new
+  end
+
+  def update
+    @question.update(question_params)
   end
 
   def new

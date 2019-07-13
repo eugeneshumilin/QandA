@@ -58,6 +58,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with in-valid attributes' do
+
       it 'should not be saved in database' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
@@ -77,6 +78,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'user tries to delete own question' do
+
       it 'should delete question' do
         question
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
@@ -94,6 +96,53 @@ RSpec.describe QuestionsController, type: :controller do
         expect {
           expect { delete :destroy, params: { id: another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
         }.to_not change(Question, :count)
+      end
+    end
+  end
+
+  describe 'PATCH #update' do
+    before { login(user) }
+
+    context 'user tries to update his own question' do
+
+      context 'with valid attributes' do
+
+        it 'should change question attributes' do
+          patch :update, params: { id: question, question: { title: 'New title', body: 'New body' } }, format: :js
+          question.reload
+          expect(question.title).to eq 'New title'
+          expect(question.body).to eq 'New body'
+        end
+
+        it 'should render update view' do
+          patch :update, params: { id: question, question: { title: 'New title', body: 'New body' } }, format: :js
+
+          expect(response).to render_template :update
+        end
+      end
+
+      context 'with invalid attributes' do
+
+        it 'should do not changes question attributes' do
+          expect do
+            patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+          end.to_not change(question, :title)
+        end
+
+        it 'should render update view' do
+          patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
+
+          expect(response).to render_template :update
+        end
+      end
+    end
+
+    context "user tries to update another user's question" do
+
+      it 'should not update question' do
+        expect do
+          patch :update, params: { id: another_question, question: attributes_for(:question) }, format: :js
+        end.to_not change(question, :title)
       end
     end
   end
