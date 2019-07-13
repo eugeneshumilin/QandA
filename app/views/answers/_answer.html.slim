@@ -2,7 +2,7 @@ li.list-group-item
   div class="answer-#{answer.id}"
     h4 = answer.body
     - if current_user&.author_of?(answer)
-      = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?'}
+      = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?', remote: true}, class: 'delete-answer-link'
       = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
 = form_with model: answer, class: 'form-group hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
