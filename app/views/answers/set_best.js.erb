@@ -1,0 +1,2 @@
+$('.answers').html('<%= j render @answer.question.answers.by_best %>');
+$("div.answer-<%= @answer.id %>").addClass('best-answer');

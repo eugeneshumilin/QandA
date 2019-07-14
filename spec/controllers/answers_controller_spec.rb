@@ -106,4 +106,27 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #set_best' do
+    let!(:another_question) { create(:question, user: another_user) }
+    let!(:best_answer) { create(:answer, question: another_question, user: another_user) }
+
+    before { login(user) }
+
+    context 'author of question tries to set best answer' do
+
+      it "should change 'is_best' answer's attribute as true" do
+        patch :set_best, params: { id: answer }, format: :js
+        answer.reload
+        expect(answer).to be_is_best
+      end
+    end
+
+    context "user tries to set best answer for someone else's question" do
+      it "should not change 'is_best' answer's attribute" do
+        patch :set_best, params: { id: best_answer }, format: :js
+        expect(answer).to_not be_is_best
+      end
+    end
+  end
 end

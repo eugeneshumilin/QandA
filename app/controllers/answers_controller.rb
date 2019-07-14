@@ -1,5 +1,5 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :destroy]
+  before_action :authenticate_user!, only: [:create, :destroy, :set_best]
   before_action :load_question, only: [:create]
   before_action :load_current_user_answer, only: [:destroy]
 
@@ -17,6 +17,11 @@ class AnswersController < ApplicationController
   def destroy
     @answer = Answer.find(params[:id])
     @answer.destroy
+  end
+
+  def set_best
+    @answer = Answer.find(params[:id])
+    @answer.set_best
   end
 
   private
