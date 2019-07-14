@@ -6,11 +6,3 @@ $(document).on('turbolinks:load', function(){
         $('form#edit-answer-' + answerId).removeClass('hidden');
     })
 });
-
-
-$(document).on('turbolinks:load', function(){
-    $('.answers').on('click', '.best-answer-link', function(e){
-        var answerId = $(this).data('answerId');
-        $('div.answer-' + answerId).addClass('best-answer');
-    })
-});
