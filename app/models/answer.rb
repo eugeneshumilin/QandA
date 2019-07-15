@@ -11,7 +11,7 @@ class Answer < ApplicationRecord
     old_best = question.answers.find_by(is_best: true)
 
     transaction do
-      old_best.update!(is_best: false) if old_best
+      old_best&.update!(is_best: false)
       update!(is_best: true)
     end
   end

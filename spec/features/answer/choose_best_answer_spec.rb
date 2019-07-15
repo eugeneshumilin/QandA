@@ -33,4 +33,12 @@ feature 'User can choose the best answer', %q{
       expect(page).to_not have_link "best answer"
     end
   end
+
+  scenario 'unauthenticated user tries to choose best answer' do
+    visit question_path(question)
+
+    within ".answers" do
+      expect(page).to_not have_link "best answer"
+    end
+  end
 end

@@ -142,7 +142,7 @@ RSpec.describe QuestionsController, type: :controller do
       it 'should not update question' do
         expect do
           patch :update, params: { id: another_question, question: attributes_for(:question) }, format: :js
-        end.to_not change(question, :title)
+        end.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end

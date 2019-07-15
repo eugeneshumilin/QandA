@@ -64,9 +64,9 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'PATCH #update' do
     context 'user tries to update his own answer' do
+      before { login(user) }
 
       context 'with valid attributes' do
-        before { login(user) }
 
         it 'should change answer attributes' do
           patch :update, params: { id: answer, answer: { body: 'New body' } }, format: :js
@@ -100,9 +100,9 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       it 'should not update answer' do
-        expect do
-          patch :update, params: { id: another_answer, answer: { body: 'New body' } }, format: :js
-        end.to_not change(answer, :body)
+        expect { patch :update, params: { id: another_answer, answer: { body: 'new body'} }, format: :js }.to raise_exception(ActiveRecord::RecordNotFound)
+        another_answer.reload
+        expect(another_answer.body).to_not eq 'new body'
       end
     end
   end
@@ -110,7 +110,6 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #set_best' do
     let!(:another_question) { create(:question, user: another_user) }
     let!(:best_answer) { create(:answer, question: another_question, user: another_user) }
-
     before { login(user) }
 
     context 'author of question tries to set best answer' do
@@ -124,8 +123,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context "user tries to set best answer for someone else's question" do
       it "should not change 'is_best' answer's attribute" do
-        patch :set_best, params: { id: best_answer }, format: :js
-        expect(answer).to_not be_is_best
+        expect { patch :set_best, params: { id: best_answer }, format: :js}.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end
