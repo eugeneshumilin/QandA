@@ -1,0 +1,15 @@
+li.list-group-item
+  div class="question-#{question.id}"
+    h4 = link_to  question.title, question_path(question)
+    p = question.body
+    - if current_user&.author_of?(question)
+      = link_to 'Delete', question_path(question), method: :delete, data: {confirm: 'Are you sure?'}
+      = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
+
+= form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
+  = f.label :title
+  = f.text_field :title, class: 'form-control'
+  = f.label :body
+  = f.text_area :body, class: 'form-control'
+  br
+  = f.submit 'Save', class: 'btn btn-primary'

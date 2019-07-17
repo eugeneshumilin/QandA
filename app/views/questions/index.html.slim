@@ -1,7 +1,6 @@
-p= link_to 'Ask question', new_question_path
+h3= link_to 'Ask question', new_question_path
+br
 
-- @questions.each do |question|
-  p= question.title
-  p= link_to 'Show', question
-  - if current_user&.author_of?(question)
-    p= link_to 'Delete', question_path(question), method: :delete, data: {confirm: 'Are you sure?'}
+ul.list-group.list-group-flush.questions
+  p.question-errors
+  = render @questions
