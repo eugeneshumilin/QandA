@@ -13,17 +13,26 @@ feature 'user can create answer', %q{
       visit question_path(question)
     end
 
-    scenario 'authenticated user tries to create answer with valid attributes', js: true do
+    scenario 'tries to create answer with valid attributes', js: true do
       fill_in 'Body', with: 'Test answer'
       click_on 'Reply'
 
       expect(page).to have_content 'Test answer'
     end
 
-    scenario 'authenticated user tries to create answer with in-valid attributes' do
+    scenario 'tries to create answer with in-valid attributes' do
       click_on 'Reply'
 
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'tries to create answer with attached files' do
+      fill_in 'Body', with: 'Test answer'
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
+      click_on 'Reply'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
   end
 

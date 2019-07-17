@@ -5,6 +5,9 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
     = link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
   - if current_user&.author_of?(answer.question) && !answer.is_best
     = link_to 'best answer', set_best_answer_path(answer), method: :patch, class: "best-answer-link", data: { answer_id: answer.id }, remote: true
+  -if answer.files.attached?
+    - answer.files.each do |file|
+      p = link_to file.filename.to_s, url_for(file)
 
 = form_with model: answer, class: 'form-group hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
   = f.label :body

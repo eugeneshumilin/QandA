@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @answers = Answer.all
+    @answers = Answer.with_attached_files.all
     @answer = Answer.new
   end
 

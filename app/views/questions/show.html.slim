@@ -21,4 +21,6 @@ br
   = f.label :body
   = f.text_area :body, class: 'form-control create-answer'
   br
+  = f.label :files
+  = f.file_field :files, multiple: true
   = f.submit 'Reply', class: 'btn btn-primary'
