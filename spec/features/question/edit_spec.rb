@@ -36,15 +36,13 @@ feature 'User can edit his question', %q{
       end
     end
 
-    scenario 'tries to add files to his own question' do
+    scenario 'tries to add files when edit his own question' do
       sign_in(user)
       visit questions_path
 
       click_on 'Edit'
 
       within '.questions' do
-        fill_in 'Title', with: 'Edited title'
-        fill_in 'Body', with: 'Edited body'
         attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
 
         click_on 'Save'

@@ -13,4 +13,7 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
   = f.label :body
   = f.text_area :body, class: 'form-control update-answer'
   br
+  = f.label :files
+  = f.file_field :files, multiple: true
+  br
   = f.submit 'Save', class: 'btn btn-primary'
