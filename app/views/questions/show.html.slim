@@ -1,13 +1,5 @@
-.card.text-center
-  .car-header
-    h3 = @question.title
-  .card-body
-    = @question.body
-
--if @question.files.attached?
-  - @question.files.each do |file|
-    p = link_to file.filename.to_s, url_for(file)
-
+.questions
+  = render @question
 
 br
 

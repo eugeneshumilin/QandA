@@ -22,9 +22,9 @@ feature 'User can edit his answer', %q{
       sign_in(user)
       visit question_path(question)
 
-      click_on 'Edit'
 
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Body', with: 'Edited answer'
         click_on 'Save'
 
@@ -38,11 +38,9 @@ feature 'User can edit his answer', %q{
       sign_in(user)
       visit question_path(question)
 
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
-
         click_on 'Save'
 
         expect(page).to have_link 'rails_helper.rb'
@@ -54,9 +52,8 @@ feature 'User can edit his answer', %q{
       sign_in(user)
       visit question_path(question)
 
-      click_on 'Edit'
-
       within '.answers' do
+        click_on 'Edit'
         fill_in 'Body', with: ''
         click_on 'Save'
 

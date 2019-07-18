@@ -7,7 +7,11 @@ li.list-group-item
       = link_to 'Edit', '#', class: 'edit-question-link', data: { question_id: question.id }
     - if question.files.attached?
       - question.files.each do |file|
-        p = link_to file.filename.to_s, url_for(file)
+        div class = "attachment-#{file.id}"
+          p = link_to file.filename.to_s, url_for(file)
+          -if current_user&.author_of?(question)
+            = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link', remote: true, method: :delete
+        hr
 
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title
