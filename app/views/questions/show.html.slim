@@ -1,11 +1,12 @@
-.questions
+.questions.card
   = render @question
 
 br
 
 .answers
-  = render @question.answers.by_best
   p.answer-errors
+  = render @question.answers.by_best
+
 
 br
 
