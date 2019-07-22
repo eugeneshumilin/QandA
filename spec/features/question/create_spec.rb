@@ -6,7 +6,7 @@ feature 'user can create question', %q{
 } do
   given(:user) { create(:user) }
 
-  describe  do
+  describe 'Authenticated user'  do
     background do
       sign_in(user)
 
@@ -14,7 +14,7 @@ feature 'user can create question', %q{
       click_on 'Ask question'
     end
 
-    scenario 'authenticated user tries to create question with valid attributes' do
+    scenario 'tries to create question with valid attributes' do
       fill_in 'Title', with: 'Question title'
       fill_in 'Body', with: 'Question body'
       click_on 'Ask'
@@ -24,10 +24,21 @@ feature 'user can create question', %q{
       expect(page).to have_content 'Question body'
     end
 
-    scenario 'user tries to create question with in-valid attributes' do
+    scenario 'tries to create question with in-valid attributes' do
       click_on 'Ask'
 
       expect(page).to have_content "Title can't be blank"
+    end
+
+    scenario 'tries to create question with attached files' do
+      fill_in 'Title', with: 'Question title'
+      fill_in 'Body', with: 'Question body'
+
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
+      click_on 'Ask'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
     end
   end
 
