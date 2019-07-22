@@ -5,6 +5,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:another_user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:another_question) { create(:question, user: another_user ) }
+  let(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #index' do
     let(:questions) { create_list(:question, 3, user: user) }
@@ -30,6 +31,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'should render show view' do
       expect(response).to render_template :show
     end
+
+    it 'assigns a new link for answer' do
+      expect(assigns(:answer).links.first).to be_a_new(Link)
+    end
   end
 
   describe 'GET #new' do
@@ -40,6 +45,10 @@ RSpec.describe QuestionsController, type: :controller do
 
     it 'should render new view' do
       expect(response).to render_template :new
+    end
+
+    it 'assigns a new link to link' do
+      expect(assigns(:question).links.first).to be_a_new(Link)
     end
   end
 

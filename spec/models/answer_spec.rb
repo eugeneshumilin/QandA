@@ -8,6 +8,10 @@ RSpec.describe Answer, type: :model do
 
   it { should have_db_index(:question_id) }
 
+  it { should have_many(:links).dependent(:destroy) }
+
+  it { should accept_nested_attributes_for :links }
+
   describe "#set_best" do
     let!(:user) { create(:user) }
     let!(:question) { create(:question, user: user) }

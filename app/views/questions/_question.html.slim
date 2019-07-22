@@ -13,6 +13,12 @@ div class="question-#{question.id}"
           -if current_user&.author_of?(question)
             = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link badge badge-light', remote: true, method: :delete
 
+  .links
+    p Links:
+    ul
+      - question.links.each do |link|
+        li = link_to link.name, link.url
+
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title
   = f.text_field :title, class: 'form-control'
