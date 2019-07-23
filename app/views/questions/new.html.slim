@@ -11,10 +11,9 @@
 
   p Links:
   = f.fields_for :links do |l|
-    = l.label :name, 'Link name'
-    = l.text_field :name
-    = l.label :url
-    = l.text_field :url
+    = render 'link_fields', f: l
+  .links
+    = link_to_add_association 'add link', f, :links
 
 
   br

@@ -42,3 +42,4 @@ gem 'launchy'
 gem 'bootstrap', '~> 4.3.1'
 gem 'jquery-rails'
 gem "aws-sdk-s3", require: false
+gem "cocoon"
