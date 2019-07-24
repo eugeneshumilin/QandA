@@ -17,7 +17,11 @@ div class="question-#{question.id}"
     p Links:
     ul
       - question.links.each do |link|
-        li = link_to link.name, link.url
+        div class = "link-#{link.id}"
+          - if link.is_gist?
+            = link.gist_content
+          - else
+            li= link_to link.name, link.url, target: :blank
 
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title

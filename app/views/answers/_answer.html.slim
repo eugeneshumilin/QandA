@@ -15,7 +15,11 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
     p Links:
     ul
       - answer.links.each do |link|
-        li = link_to link.name, link.url
+        div class = "link-#{link.id}"
+          - if link.is_gist?
+            = link.gist_content
+          - else
+            li= link_to link.name, link.url, target: :blank
 
 hr
 
