@@ -21,6 +21,10 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
           - else
             li= link_to link.name, link.url, target: :blank
 
+          div class = "delete-link-#{link.id}"
+            - if current_user&.author_of?(answer)
+              = link_to 'remove', link_path(link), class: 'delete-link', remote: true, method: :delete
+
 hr
 
 = form_with model: answer, class: 'form-group hidden', html: { id: "edit-answer-#{answer.id}" } do |f|

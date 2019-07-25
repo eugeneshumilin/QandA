@@ -23,6 +23,10 @@ div class="question-#{question.id}"
           - else
             li= link_to link.name, link.url, target: :blank
 
+          div class = "delete-link-#{link.id}"
+            -if current_user&.author_of?(question)
+              = link_to 'remove', link_path(link), class: 'delete-link', remote: true, method: :delete
+
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title
   = f.text_field :title, class: 'form-control'
