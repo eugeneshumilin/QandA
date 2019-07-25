@@ -35,5 +35,9 @@ div class="question-#{question.id}"
   br
   = f.label :files
   = f.file_field :files, multiple: true, direct_upload: true
+
+  = f.fields_for :links do |l|
+  .links
+    = link_to_add_association 'add link', f, :links
   br
   = f.submit 'Save', class: 'btn btn-primary'
