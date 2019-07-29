@@ -1,0 +1,4 @@
+- @badges.each do |badge|
+  p = link_to badge.question.title, question_path(badge.question)
+  = image_tag badge.image, title: badge.title, size: "50x50"
+  p = badge.title

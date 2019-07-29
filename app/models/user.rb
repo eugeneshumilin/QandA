@@ -10,4 +10,8 @@ class User < ApplicationRecord
   def author_of?(resource)
     resource.user_id == id
   end
+
+  def get_reward!(badge)
+    badges << badge
+  end
 end
