@@ -78,7 +78,7 @@ feature 'User can edit his question', %q{
     scenario 'tries to edit own answer by adding a link' do
       sign_in(user)
       visit questions_path
-      
+
       within '.questions' do
         click_on 'Edit'
         click_on 'add link'

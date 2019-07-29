@@ -50,6 +50,10 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns a new link to link' do
       expect(assigns(:question).links.first).to be_a_new(Link)
     end
+
+    it 'assigns a new badge to badge' do
+      expect(assigns(:question).badge).to be_a_new(Badge)
+    end
   end
 
   describe 'POST #create' do

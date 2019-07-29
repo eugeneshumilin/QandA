@@ -40,6 +40,19 @@ feature 'user can create question', %q{
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    scenario 'tries to create question with reward for best answer' do
+      fill_in 'Title', with: 'Question title'
+      fill_in 'Body', with: 'Question body'
+
+      fill_in 'Badge title', with: 'Badge for best answer'
+      attach_file 'Image', "#{Rails.root}/public/apple-touch-icon.png"
+
+      click_on 'Ask'
+
+      expect(page).to have_content 'Badge for best answer'
+      expect(page).to have_css("img[src*='apple-touch-icon.png']")
+    end
   end
 
   scenario 'unauthenticated user tries to create question' do
