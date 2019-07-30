@@ -17,6 +17,7 @@ RSpec.describe Answer, type: :model do
     let!(:question) { create(:question, user: user) }
     let!(:answer) { create(:answer, question: question, user: user) }
     let!(:best_answer) { create(:answer, question: question, user: user, is_best: true) }
+    let!(:badge) { create(:badge, question: question) }
 
     it "the old best answer is no longer better" do
       answer.set_best
@@ -28,6 +29,12 @@ RSpec.describe Answer, type: :model do
       answer.set_best
       answer.reload
       expect(answer).to be_is_best
+    end
+
+    it 'should add badge to author of best answer' do
+      answer.set_best
+      answer.reload
+      expect(badge.user).to eq user
     end
   end
 

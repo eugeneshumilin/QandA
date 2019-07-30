@@ -12,6 +12,6 @@ class User < ApplicationRecord
   end
 
   def get_reward!(badge)
-    badges << badge
+    badge.update!(user: self)
   end
 end
