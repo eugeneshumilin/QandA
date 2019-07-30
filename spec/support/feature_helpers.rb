@@ -9,4 +9,11 @@ module FeatureHelpers
   def attach_file_to(receiver)
     receiver.files.attach(io: File.open("#{Rails.root.join('spec/rails_helper.rb')}"), filename: 'rails_helper.rb')
   end
+
+  def add_image_to(badge)
+    badge.image.attach(
+        io: File.open(Rails.root.join('public/apple-touch-icon.png').to_s),
+        filename: 'apple-touch-icon.png'
+    )
+  end
 end

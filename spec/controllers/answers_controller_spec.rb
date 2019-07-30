@@ -110,14 +110,20 @@ RSpec.describe AnswersController, type: :controller do
   describe 'PATCH #set_best' do
     let!(:another_question) { create(:question, user: another_user) }
     let!(:best_answer) { create(:answer, question: another_question, user: another_user) }
+    let!(:badge) { create(:badge, question: question) }
+
     before { login(user) }
 
     context 'author of question tries to set best answer' do
+      before { patch :set_best, params: { id: answer, format: :js } }
 
       it "should change 'is_best' answer's attribute as true" do
-        patch :set_best, params: { id: answer }, format: :js
         answer.reload
         expect(answer).to be_is_best
+      end
+
+      it "should assigns a question's badge to user " do
+        expect(badge).to eq user.badges.last
       end
     end
 

@@ -1,0 +1,6 @@
+.links-field
+  = f.label :name, 'Link name'
+  = f.text_field :name
+  = f.label :url
+  = f.text_field :url
+  = link_to_remove_association "remove link", f

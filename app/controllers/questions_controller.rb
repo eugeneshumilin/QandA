@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def show
     @answers = Answer.with_attached_files.all
     @answer = Answer.new
+    @answer.links.build
   end
 
   def update
@@ -18,6 +19,8 @@ class QuestionsController < ApplicationController
 
   def new
     @question = current_user.questions.build
+    @question.links.build
+    @question.badge ||= Badge.new
   end
 
   def create
@@ -38,7 +41,10 @@ class QuestionsController < ApplicationController
   private
 
   def question_params
-    params.require(:question).permit(:title, :body, files: [])
+    params.require(:question).permit(:title, :body,
+                                     files: [],
+                                     links_attributes: [:name, :url],
+                                     badge_attributes: [:title, :image])
   end
 
   def load_question

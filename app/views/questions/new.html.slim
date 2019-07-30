@@ -8,5 +8,21 @@
   br
   = f.label :files
   = f.file_field :files, multiple: true
+
+  p Links:
+  = f.fields_for :links do |l|
+    = render 'link_fields', f: l
+  .links
+    = link_to_add_association 'add link', f, :links
+
+  p Badge:
+  = f.fields_for :badge do |b|
+    = b.label :title, 'Badge title'
+    = b.text_field :title
+
+    = b.label :image
+    = b.file_field :image
+
+
   br
   = f.submit 'Ask', class: 'btn btn-primary'

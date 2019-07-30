@@ -67,5 +67,23 @@ feature 'User can edit his answer', %q{
 
       expect(page).to_not have_content 'Edit'
     end
+
+    scenario 'tries to edit own answer by adding a link' do
+      sign_in(user)
+      visit question_path(question)
+
+      within '.answers' do
+        click_on 'Edit'
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Url', with: "http://google.com"
+
+        click_on 'Save'
+
+        expect(page).to have_link 'Google', href: "http://google.com"
+        expect(page).to_not have_selector 'textfield'
+      end
+    end
   end
 end
