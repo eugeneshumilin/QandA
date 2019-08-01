@@ -21,7 +21,7 @@ feature 'User can choose the best answer', %q{
       expect(page).to_not have_link "best answer"
     end
 
-    expect(page.find('.answers div:first-child')).to have_content best_answer.body
+    expect(page.find('.best-answer')).to have_content best_answer.body
     expect(page).to have_css('.best-answer')
   end
 
