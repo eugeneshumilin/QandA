@@ -3,7 +3,7 @@ div class = "rate #{resource.class}-#{resource.id}"
     =  "rating: #{resource.stats}"
 
   - unless current_user&.author_of?(resource)
-    span.voting
+    span.voting class = "#{'hidden' if current_user&.already_liked?(resource.id)}"
       = link_to '+', polymorphic_path(resource, action: :vote_up), method: :post, remote: true, data: { type: :json }
       = link_to '-', polymorphic_path(resource, action: :vote_down), method: :post, remote: true, data: { type: :json }
     span.re-vote

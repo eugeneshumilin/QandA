@@ -45,6 +45,12 @@ feature 'User can vote for a answer', %q{
         expect(page).to_not have_link 'cancel your vote'
       end
     end
+
+    scenario 'can see rating of answer' do
+      within ".Answer-#{answer.id}" do
+        expect(page).to have_content '0'
+      end
+    end
   end
 
   describe 'Author' do
