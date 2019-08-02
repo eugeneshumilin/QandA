@@ -15,4 +15,8 @@ class User < ApplicationRecord
   def get_reward!(badge)
     badge.update!(user: self)
   end
+
+  def already_liked?(item_id)
+    likes.exists?(likable_id: item_id)
+  end
 end

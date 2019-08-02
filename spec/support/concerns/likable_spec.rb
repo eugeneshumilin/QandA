@@ -27,16 +27,4 @@ RSpec.shared_examples_for 'likable' do
     expect(Like.last.user).to eq another_user
     expect(Like.last.likable).to eq likable
   end
-
-  describe '#already_liked?' do
-    before { likable.vote_up(another_user) }
-
-    it 'resource already liked by user' do
-      expect(likable).to be_already_liked(another_user)
-    end
-
-    it 'resource has no liked by user' do
-      expect(likable).to_not be_already_liked(user)
-    end
-  end
 end
