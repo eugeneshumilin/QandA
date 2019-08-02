@@ -6,14 +6,20 @@ module Likable
   end
 
   def vote_up(user)
-    likes.create!(user: user, rating: 1) unless user.already_liked?(id)
+    to_vote(user, 1)
   end
 
   def vote_down(user)
-    likes.create!(user: user, rating: -1) unless user.already_liked?(id)
+    to_vote(user, -1)
   end
 
   def stats
     likes.sum(:rating)
+  end
+
+  private
+
+  def to_vote(user, rating)
+    likes.create!(user: user, rating: rating) unless user.already_liked?(id)
   end
 end

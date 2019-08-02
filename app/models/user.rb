@@ -16,7 +16,7 @@ class User < ApplicationRecord
     badge.update!(user: self)
   end
 
-  def already_liked?(item_id)
-    likes.exists?(likable_id: item_id)
+  def already_liked?(item)
+    likes.exists?(likable: item)
   end
 end
