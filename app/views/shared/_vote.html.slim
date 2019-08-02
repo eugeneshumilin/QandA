@@ -6,3 +6,7 @@ div class = "rate #{resource.class}-#{resource.id}"
     span.voting
       = link_to '+', polymorphic_path(resource, action: :vote_up), method: :post, remote: true, data: { type: :json }
       = link_to '-', polymorphic_path(resource, action: :vote_down), method: :post, remote: true, data: { type: :json }
+    span.re-vote
+      = link_to 'cancel your vote', polymorphic_path(resource, action: :cancel_vote),
+              class: "cancel-vote-link #{'hidden' unless current_user&.already_liked?(resource.id)}",
+              method: :delete, remote: true, data: {type: :json}

@@ -49,4 +49,26 @@ RSpec.shared_examples 'liked' do
       end
     end
   end
+
+  describe 'DELETE #cancel_vote' do
+    context 'user can cancel his vote' do
+      before { login(another_user) }
+
+      let!(:user_likable) { liked(model, user) }
+
+      it 'cancel vote' do
+        post :vote_up, params: { id: user_likable }
+        expect { delete :cancel_vote, params: { id: user_likable } }.to change(Like, :count).by(-1)
+      end
+    end
+
+    context 'user can not cancel another vote' do
+      let(:new_user) { create(:user) }
+      let!(:new_like) { liked(model, new_user) }
+
+      it "user can not cancel another user's vote" do
+        expect { delete :cancel_vote, params: { id: new_like } }.to_not change(Like, :count)
+      end
+    end
+  end
 end
