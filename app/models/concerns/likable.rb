@@ -16,4 +16,8 @@ module Likable
   def stats
     likes.sum(:rating)
   end
+
+  def already_liked?(user)
+    likes.exists?(user: user)
+  end
 end

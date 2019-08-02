@@ -6,19 +6,23 @@ module Liked
   end
 
   def vote_up
-    @likable.vote_up(current_user)
-    render_json
+    unless current_user.author_of?(@likable)
+      @likable.vote_up(current_user)
+      render_json
+    end
   end
 
   def vote_down
-    @likable.vote_down(current_user)
-    render_json
+    unless current_user.author_of?(@likable)
+      @likable.vote_down(current_user)
+      render_json
+    end
   end
 
   private
 
   def render_json
-    render json: { rating: @likable.likes.pluck(:rating).sum, klass: @likable.class.to_s, id: @likable.id }
+    render json: { rating: @likable.stats, klass: @likable.class.to_s, id: @likable.id }
   end
 
   def model_klass
