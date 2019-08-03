@@ -4,5 +4,5 @@ class Like < ApplicationRecord
 
   validates :rating, presence: true
   validates_numericality_of :rating, only_integer: true
-  validates_inclusion_of :rating, in: -1..1
+  validates_inclusion_of :rating, in: [-1, 1]
 end
