@@ -30,4 +30,20 @@ RSpec.describe User, type: :model do
       expect(badge).to eq user.badges.last
     end
   end
+
+  describe '#already_liked?' do
+    let(:user) { create(:user) }
+    let(:another_user) { create(:user) }
+    let(:question) { create(:question, user: user) }
+
+    before { question.vote_up(another_user) }
+
+    it 'user already liked the resource' do
+      expect(another_user).to be_already_liked(question)
+    end
+
+    it 'user has not liked the resource' do
+      expect(user).to_not be_already_liked(question)
+    end
+  end
 end

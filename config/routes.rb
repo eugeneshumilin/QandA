@@ -2,8 +2,15 @@ Rails.application.routes.draw do
   devise_for :users
   root to: "questions#index"
 
-  resources :questions, shallow: true do
-    resources :answers do
+  concern :likable do
+    member do
+      post :vote_up, :vote_down
+      delete :cancel_vote
+    end
+  end
+
+  resources :questions, concerns: :likable, shallow: true do
+    resources :answers, concerns: :likable do
       member do
         patch :set_best
       end

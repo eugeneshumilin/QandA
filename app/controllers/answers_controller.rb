@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Liked
+
   before_action :authenticate_user!, only: [:create, :destroy, :update, :set_best]
   before_action :load_question, only: [:create]
   before_action :load_current_user_answer, only: [:destroy, :update, :set_best]

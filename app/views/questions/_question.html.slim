@@ -13,6 +13,9 @@ div class="question-#{question.id}"
           -if current_user&.author_of?(question)
             = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link badge badge-light', remote: true, method: :delete
 
+  .vote
+    = render 'shared/vote', resource: question
+
   .links
     p Links:
     ul
