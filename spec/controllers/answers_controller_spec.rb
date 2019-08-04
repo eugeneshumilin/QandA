@@ -20,7 +20,7 @@ RSpec.describe AnswersController, type: :controller do
         expect(response).to render_template :create
       end
     end
-    
+
     context 'with invalid attributes' do
       it 'should not be saved in database' do
         expect { post :create, params: { question_id: question, answer: attributes_for(:answer, :invalid) }, format: :js }.to_not change(Answer, :count)
@@ -67,7 +67,6 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       context 'with valid attributes' do
-
         it 'should change answer attributes' do
           patch :update, params: { id: answer, answer: { body: 'New body' } }, format: :js
           answer.reload
@@ -100,7 +99,7 @@ RSpec.describe AnswersController, type: :controller do
       before { login(user) }
 
       it 'should not update answer' do
-        expect { patch :update, params: { id: another_answer, answer: { body: 'new body'} }, format: :js }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { patch :update, params: { id: another_answer, answer: { body: 'new body' } }, format: :js }.to raise_exception(ActiveRecord::RecordNotFound)
         another_answer.reload
         expect(another_answer.body).to_not eq 'new body'
       end
@@ -129,7 +128,7 @@ RSpec.describe AnswersController, type: :controller do
 
     context "user tries to set best answer for someone else's question" do
       it "should not change 'is_best' answer's attribute" do
-        expect { patch :set_best, params: { id: best_answer }, format: :js}.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { patch :set_best, params: { id: best_answer }, format: :js }.to raise_exception(ActiveRecord::RecordNotFound)
       end
     end
   end

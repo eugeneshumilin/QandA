@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature "user can view question and question's answers", %q{
+feature "user can view question and question's answers", "
   In order to find answer
   user can view question and all question's answers
-} do
-  given(:user) { create (:user) }
+" do
+  given(:user) { create :user }
   given(:question) { create(:question, user: user) }
   given!(:answers) { create_list(:answer, 3, question: question, user: user) }
 
