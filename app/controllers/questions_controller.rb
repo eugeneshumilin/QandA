@@ -4,9 +4,11 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: [:show]
   before_action :load_current_user_question, only: %i[destroy update]
+  after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
+    gon.current_user = current_user
   end
 
   def show
@@ -47,6 +49,15 @@ class QuestionsController < ApplicationController
                                      files: [],
                                      links_attributes: %i[name url],
                                      badge_attributes: %i[title image])
+  end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      @question.to_json(include: :user)
+    )
   end
 
   def load_question
