@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'User can vote for a answer', '
+feature 'User can vote for a answer', %q{
   In order to rate favorite answer
   user as an authenticated user can vote
-' do
+} do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }

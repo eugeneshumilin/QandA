@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-feature 'User can delete links', '
+feature 'User can delete links', %q{
   In order to delete links from question
   user as an author of question
   can delete own links
-' do
+} do
+
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given(:question) { create(:question, user: user) }
@@ -57,4 +58,6 @@ feature 'User can delete links', '
       expect(page).to_not have_link 'remove'
     end
   end
+
 end
+

@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :badge do
-    title { 'MyString' }
+    title { "MyString" }
     user { nil }
     question { nil }
   end

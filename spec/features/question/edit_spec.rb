@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-feature 'User can edit his question', "
+feature 'User can edit his question', %q{
   In order to correct mistakes
   as an author of question
   i'd like to be able to edit my question
-" do
+} do
+
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
@@ -42,7 +43,7 @@ feature 'User can edit his question', "
       click_on 'Edit'
 
       within '.questions' do
-        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
 
         click_on 'Save'
 
@@ -83,11 +84,11 @@ feature 'User can edit his question', "
         click_on 'add link'
 
         fill_in 'Link name', with: 'Google'
-        fill_in 'Url', with: 'http://google.com'
+        fill_in 'Url', with: "http://google.com"
 
         click_on 'Save'
 
-        expect(page).to have_link 'Google', href: 'http://google.com'
+        expect(page).to have_link 'Google', href: "http://google.com"
         expect(page).to_not have_selector 'textfield'
       end
     end

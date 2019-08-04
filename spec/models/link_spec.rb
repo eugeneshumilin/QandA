@@ -6,7 +6,7 @@ RSpec.describe Link, type: :model do
   it { should validate_presence_of :name }
   it { should validate_presence_of :url }
 
-  it { should allow_value('https://github.com').for(:url) }
+  it { should allow_value("https://github.com").for(:url) }
   it { should_not allow_value('github').for(:url) }
 
   describe '#gist?' do
@@ -16,11 +16,11 @@ RSpec.describe Link, type: :model do
     let!(:gist_link) { create(:link, :gist_link, linkable: question) }
 
     it 'link url should match the gist' do
-      expect(gist_link).to be_gist
+      expect(gist_link).to be_is_gist
     end
 
     it "link url don't should match the gist" do
-      expect(link).to_not be_gist
+      expect(link).to_not be_is_gist
     end
   end
 

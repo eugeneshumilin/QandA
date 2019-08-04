@@ -21,7 +21,7 @@ div class="question-#{question.id}"
     ul
       - question.links.each do |link|
         div class = "link-#{link.id}"
-          - if link.gist?
+          - if link.is_gist?
             = link.gist_content
           - else
             li= link_to link.name, link.url, target: :blank
