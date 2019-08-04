@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can choose the best answer', %q{
+feature 'User can choose the best answer', "
   In order to choose best answer
   as an author of question
   I'd like to be able mark the best answer
-} do
-
+" do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
@@ -17,8 +16,8 @@ feature 'User can choose the best answer', %q{
     visit question_path(question)
 
     within ".answer-#{best_answer.id}" do
-      click_link "best answer"
-      expect(page).to_not have_link "best answer"
+      click_link 'best answer'
+      expect(page).to_not have_link 'best answer'
     end
 
     expect(page.find('.best-answer')).to have_content best_answer.body
@@ -30,15 +29,15 @@ feature 'User can choose the best answer', %q{
     visit question_path(question)
 
     within ".answer-#{answer_list[0].id}" do
-      expect(page).to_not have_link "best answer"
+      expect(page).to_not have_link 'best answer'
     end
   end
 
   scenario 'unauthenticated user tries to choose best answer' do
     visit question_path(question)
 
-    within ".answers" do
-      expect(page).to_not have_link "best answer"
+    within '.answers' do
+      expect(page).to_not have_link 'best answer'
     end
   end
 end

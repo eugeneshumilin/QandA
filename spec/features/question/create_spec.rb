@@ -1,12 +1,12 @@
 require 'rails_helper'
 
-feature 'user can create question', %q{
+feature 'user can create question', '
   In order to solve problem
   authenticated user can ask question
-} do
+' do
   given(:user) { create(:user) }
 
-  describe 'Authenticated user'  do
+  describe 'Authenticated user' do
     background do
       sign_in(user)
 
@@ -34,7 +34,7 @@ feature 'user can create question', %q{
       fill_in 'Title', with: 'Question title'
       fill_in 'Body', with: 'Question body'
 
-      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Ask'
 
       expect(page).to have_link 'rails_helper.rb'
