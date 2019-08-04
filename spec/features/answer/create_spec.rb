@@ -1,9 +1,9 @@
 require 'rails_helper'
 
-feature 'user can create answer', %q{
+feature 'user can create answer', '
   In order to help people
   authenticated user can create answer
-} do
+' do
   given(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
 
@@ -28,7 +28,7 @@ feature 'user can create answer', %q{
 
     scenario 'tries to create answer with attached files' do
       fill_in 'Body', with: 'Test answer'
-      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb" ]
+      attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
       click_on 'Reply'
 
       expect(page).to have_link 'rails_helper.rb'

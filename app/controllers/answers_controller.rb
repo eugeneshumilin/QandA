@@ -1,9 +1,9 @@
 class AnswersController < ApplicationController
   include Liked
 
-  before_action :authenticate_user!, only: [:create, :destroy, :update, :set_best]
+  before_action :authenticate_user!, only: %i[create destroy update set_best]
   before_action :load_question, only: [:create]
-  before_action :load_current_user_answer, only: [:destroy, :update, :set_best]
+  before_action :load_current_user_answer, only: %i[destroy update set_best]
 
   def create
     @answer = @question.answers.build(answer_params)
@@ -26,7 +26,7 @@ class AnswersController < ApplicationController
   private
 
   def answer_params
-    params.require(:answer).permit(:body, files: [], links_attributes: [:name, :url])
+    params.require(:answer).permit(:body, files: [], links_attributes: %i[name url])
   end
 
   def load_question

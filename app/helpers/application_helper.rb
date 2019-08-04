@@ -1,5 +1,4 @@
 module ApplicationHelper
-
   FLASH_TYPE = { alert: 'danger', notice: 'primary' }.freeze
 
   def flash_selector(type)

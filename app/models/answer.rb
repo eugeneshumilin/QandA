@@ -14,7 +14,6 @@ class Answer < ApplicationRecord
 
   scope :by_best, -> { order(is_best: :desc, created_at: :desc) }
 
-
   def set_best
     old_best = question.answers.find_by(is_best: true)
 

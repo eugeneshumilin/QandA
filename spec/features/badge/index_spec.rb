@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can view list of his awards', %q{
+feature 'User can view list of his awards', "
   In order to view the list of awards
   As an author of best answer
   I'd like to be able to see my badges
- } do
-
+ " do
   given(:user) { create(:user) }
   given(:question) { create(:question, user: user) }
   given(:badges) { create_list(:badge, 3, question: question) }
