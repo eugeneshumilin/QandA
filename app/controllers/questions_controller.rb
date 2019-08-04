@@ -1,9 +1,9 @@
 class QuestionsController < ApplicationController
   include Liked
 
-  before_action :authenticate_user!, except: %i[index show]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show]
-  before_action :load_current_user_question, only: %i[destroy update]
+  before_action :load_current_user_question, only: [:destroy, :update]
 
   def index
     @questions = Question.all
@@ -45,8 +45,8 @@ class QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:title, :body,
                                      files: [],
-                                     links_attributes: %i[name url],
-                                     badge_attributes: %i[title image])
+                                     links_attributes: [:name, :url],
+                                     badge_attributes: [:title, :image])
   end
 
   def load_question

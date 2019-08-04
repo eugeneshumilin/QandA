@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'authenticated user can sign out', '
+feature 'authenticated user can sign out', %q{
   In order to log out
   as authenticated user
   i want to be able to sign out
-' do
+} do
   given(:user) { create(:user) }
 
   scenario 'authenticated user tries sign out' do

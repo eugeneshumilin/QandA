@@ -5,7 +5,7 @@ module ControllerHelpers
   end
 
   def attach_file_to(receiver)
-    receiver.files.attach(io: File.open(Rails.root.join('spec/rails_helper.rb').to_s), filename: 'rails_helper.rb')
+    receiver.files.attach(io: File.open("#{Rails.root.join('spec/rails_helper.rb')}"), filename: 'rails_helper.rb')
   end
 
   def liked(model, user)

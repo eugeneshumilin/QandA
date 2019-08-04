@@ -24,7 +24,7 @@ RSpec.shared_examples_for 'likable' do
 
   it '#vote_down' do
     likable.vote_down(another_user)
-    expect(Like.last.rating).to eq(-1)
+    expect(Like.last.rating).to eq -1
     expect(Like.last.user).to eq another_user
     expect(Like.last.likable).to eq likable
   end

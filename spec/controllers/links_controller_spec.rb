@@ -23,6 +23,8 @@ RSpec.describe LinksController, type: :controller do
         expect(response).to render_template :destroy
       end
 
+
+
       it 'should delete answer link' do
         expect do
           delete :destroy, params: { id: answer_link }, format: :js

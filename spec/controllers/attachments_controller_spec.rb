@@ -48,11 +48,11 @@ RSpec.describe AttachmentsController, type: :controller do
         login(another_user)
       end
       it "should not delete question's file" do
-        expect { delete :destroy, params: { id: question.files.first }, format: :js }.to_not change(ActiveStorage::Attachment, :count)
+        expect { delete :destroy, params: { id: question.files.first }, format: :js}.to_not change(ActiveStorage::Attachment, :count)
       end
 
       it "should not delete answers's file" do
-        expect { delete :destroy, params: { id: answer.files.first }, format: :js }.to_not change(ActiveStorage::Attachment, :count)
+        expect { delete :destroy, params: { id: answer.files.first }, format: :js}.to_not change(ActiveStorage::Attachment, :count)
       end
     end
   end

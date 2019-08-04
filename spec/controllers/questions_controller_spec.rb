@@ -4,7 +4,7 @@ RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
   let(:another_user) { create(:user) }
   let(:question) { create(:question, user: user) }
-  let(:another_question) { create(:question, user: another_user) }
+  let(:another_question) { create(:question, user: another_user ) }
   let(:answer) { create(:answer, question: question, user: user) }
 
   describe 'GET #index' do
@@ -38,6 +38,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
+
     before { login(user) }
 
     before { get :new }
@@ -70,6 +71,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context 'with in-valid attributes' do
+
       it 'should not be saved in database' do
         expect { post :create, params: { question: attributes_for(:question, :invalid) } }.to_not change(Question, :count)
       end
@@ -81,7 +83,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     it 'should associated with user' do
-      expect { post :create, params: { question: attributes_for(:question) } }.to change(user.questions, :count).by(1)
+      expect { post :create, params: { question: attributes_for(:question) }}.to change(user.questions, :count).by(1)
     end
   end
 
@@ -89,6 +91,7 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'user tries to delete own question' do
+
       it 'should delete question' do
         question
         expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
@@ -103,9 +106,9 @@ RSpec.describe QuestionsController, type: :controller do
     context "user tries to delete someone else's question" do
       it 'should not delete question' do
         another_question
-        expect do
+        expect {
           expect { delete :destroy, params: { id: another_question } }.to raise_exception(ActiveRecord::RecordNotFound)
-        end.to_not change(Question, :count)
+        }.to_not change(Question, :count)
       end
     end
   end
@@ -114,7 +117,9 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
 
     context 'user tries to update his own question' do
+
       context 'with valid attributes' do
+
         it 'should change question attributes' do
           patch :update, params: { id: question, question: { title: 'New title', body: 'New body' } }, format: :js
           question.reload
@@ -130,6 +135,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
 
       context 'with invalid attributes' do
+
         it 'should do not changes question attributes' do
           expect do
             patch :update, params: { id: question, question: attributes_for(:question, :invalid) }, format: :js
@@ -145,6 +151,7 @@ RSpec.describe QuestionsController, type: :controller do
     end
 
     context "user tries to update another user's question" do
+
       it 'should not update question' do
         expect do
           patch :update, params: { id: another_question, question: attributes_for(:question) }, format: :js
