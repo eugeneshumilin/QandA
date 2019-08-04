@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Author can delete own answer', %q{
+feature 'Author can delete own answer', '
   In order to delete answer
   as authenticated user
   author can delete own answer
-} do
+' do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
@@ -27,7 +27,7 @@ feature 'Author can delete own answer', %q{
     visit question_path(question)
 
     within '.answers' do
-     expect(page).to_not have_link 'Delete answer'
+      expect(page).to_not have_link 'Delete answer'
     end
   end
 

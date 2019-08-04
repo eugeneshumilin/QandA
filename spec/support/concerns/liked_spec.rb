@@ -5,7 +5,6 @@ RSpec.shared_examples 'liked' do
   let(:another_user) { create(:user) }
   let(:model) { described_class.controller_name.classify.constantize }
 
-
   describe 'POST #vote_up' do
     context 'user is not author of resource' do
       before { login(another_user) }

@@ -1,10 +1,10 @@
 require 'rails_helper'
 
-feature 'Author can remove files from his own question', %q{
+feature 'Author can remove files from his own question', '
   In order to remove unnecessary files
   from his own question
   Author can delete files
-} do
+' do
   given(:user) { create(:user) }
   given(:another_user) { create(:user) }
   given!(:question) { create(:question, user: user) }
@@ -14,7 +14,7 @@ feature 'Author can remove files from his own question', %q{
     visit question_path(question)
   end
 
-  scenario "delete author's files from his own question", js: true  do
+  scenario "delete author's files from his own question", js: true do
     sign_in(user)
 
     within ".attachment-#{question.files.first.id}" do
@@ -26,13 +26,13 @@ feature 'Author can remove files from his own question', %q{
     end
   end
 
-  scenario "delete another user's question", js: true  do
+  scenario "delete another user's question", js: true do
     sign_in(another_user)
 
     expect(page).to_not have_link 'Remove file'
   end
 
-  scenario 'unauthenticated user tries to delete question', js: true  do
+  scenario 'unauthenticated user tries to delete question', js: true do
     expect(page).to_not have_link 'Remove file'
   end
 end

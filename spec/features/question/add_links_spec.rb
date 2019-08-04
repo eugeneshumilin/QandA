@@ -1,11 +1,10 @@
 require 'rails_helper'
 
-feature 'User can add links to question', %q{
+feature 'User can add links to question', "
   In order to provide additional info to my question
   as an question's author
   i'd like to be able to add links
-} do
-
+" do
   given(:user) { create(:user) }
   given(:url) { 'https://thoughtbot.com' }
   given(:gist_url) { 'https://gist.github.com/eugeneshumilin/9396d814f0cfd5510ae9ce091a1e9069' }
@@ -38,5 +37,4 @@ feature 'User can add links to question', %q{
 
     expect(page).to have_content 'Hello Thinknetica!'
   end
-
 end
