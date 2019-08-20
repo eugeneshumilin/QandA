@@ -4,6 +4,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, only: %i[create destroy update set_best]
   before_action :load_question, only: [:create]
   before_action :load_current_user_answer, only: %i[destroy update set_best]
+  after_action :publish_answer, only: :create
 
   def create
     @answer = @question.answers.build(answer_params)
@@ -35,5 +36,21 @@ class AnswersController < ApplicationController
 
   def load_current_user_answer
     @answer = current_user.answers.find(params[:id])
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    files = @answer.files.map { |f| { id: f.id, name: f.filename.to_s, url: url_for(f) }}
+
+    ActionCable.server.broadcast(
+      "question_#{@answer.question_id}_answers", {
+        answer: @answer,
+        user: current_user,
+        files: files,
+        links: @answer.links,
+        rating: @answer.stats
+      }.to_json
+    )
   end
 end

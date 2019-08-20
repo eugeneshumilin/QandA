@@ -34,6 +34,44 @@ feature 'user can create answer', '
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
     end
+
+    context 'mulitple sessions', js: true do
+      given(:some_url) { 'https://google.com' }
+
+      scenario "question appears on another user's page" do
+        Capybara.using_session('another_user') do
+          another_user = create(:user)
+
+          sign_in(another_user)
+          visit question_path(question)
+        end
+
+        Capybara.using_session('user') do
+          sign_in(user)
+          visit question_path(question)
+
+          fill_in 'Body', with: 'answer body'
+
+          attach_file 'Files', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+
+          fill_in 'Link name', with: 'My link'
+          fill_in 'Url', with: some_url
+
+          click_on 'Reply'
+
+          expect(page).to have_content 'answer body'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+        end
+
+        Capybara.using_session('another_user') do
+          expect(page).to have_content 'answer body'
+          expect(page).to have_link 'rails_helper.rb'
+          expect(page).to have_link 'spec_helper.rb'
+          expect(page).to have_link 'My link', href: some_url
+        end
+      end
+    end
   end
 
   scenario 'unathenticated user tries to create answer' do

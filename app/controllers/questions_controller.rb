@@ -4,11 +4,11 @@ class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: %i[index show]
   before_action :load_question, only: [:show]
   before_action :load_current_user_question, only: %i[destroy update]
+  before_action :current_user_to_gon, only: %i[index show]
   after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
-    gon.current_user = current_user
   end
 
   def show
@@ -66,5 +66,9 @@ class QuestionsController < ApplicationController
 
   def load_current_user_question
     @question = current_user.questions.find(params[:id])
+  end
+
+  def current_user_to_gon
+    gon.current_user = current_user
   end
 end
