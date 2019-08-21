@@ -25,4 +25,30 @@ feature 'User can add comments to question' do
       expect(page).to have_link 'New comment'
     end
   end
+
+  context 'mulitple sessions', js: true do
+    scenario "question appears on another user's page" do
+      Capybara.using_session('another_user') do
+        another_user = create(:user)
+
+        sign_in(another_user)
+        visit question_path(question)
+      end
+
+      Capybara.using_session('user') do
+        sign_in(user)
+        visit question_path(question)
+
+        click_on 'New comment'
+        fill_in 'Comment', with: 'My comment'
+        click_on 'Add comment'
+
+        expect(page).to have_content 'My comment'
+      end
+
+      Capybara.using_session('another_user') do
+        expect(page).to have_content 'My comment'
+      end
+    end
+  end
 end
