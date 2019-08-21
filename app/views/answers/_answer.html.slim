@@ -29,6 +29,14 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
   .vote
     = render 'shared/vote', resource: answer
 
+  - if current_user
+      = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: answer.class.to_s.downcase, id: answer.id }
+      = render 'comments/form', resource: answer
+
+  .comments
+    p Comments:
+    = render answer.comments
+
 hr
 
 = form_with model: answer, class: 'form-group hidden', html: { id: "edit-answer-#{answer.id}" } do |f|

@@ -9,8 +9,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :questions, concerns: :likable, shallow: true do
-    resources :answers, concerns: :likable do
+  concern :commentable do
+    resources :comments, shallow: true
+  end
+
+  resources :questions, concerns: %i[likable commentable], shallow: true do
+    resources :answers, concerns: %i[likable commentable] do
       member do
         patch :set_best
       end

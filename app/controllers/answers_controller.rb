@@ -5,6 +5,7 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create]
   before_action :load_current_user_answer, only: %i[destroy update set_best]
   after_action :publish_answer, only: :create
+  before_action :init_comment, only: %i[create update set_best]
 
   def create
     @answer = @question.answers.build(answer_params)
@@ -52,5 +53,9 @@ class AnswersController < ApplicationController
         rating: @answer.stats
       }.to_json
     )
+  end
+
+  def init_comment
+    @comment = Comment.new
   end
 end

@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   before_action :load_current_user_question, only: %i[destroy update]
   before_action :current_user_to_gon, only: %i[index show]
   after_action :publish_question, only: :create
+  before_action :init_comment, only: %i[index show update]
 
   def index
     @questions = Question.all
@@ -70,5 +71,9 @@ class QuestionsController < ApplicationController
 
   def current_user_to_gon
     gon.current_user = current_user
+  end
+
+  def init_comment
+    @comment = Comment.new
   end
 end

@@ -14,6 +14,7 @@ RSpec.describe Answer, type: :model do
   it { should accept_nested_attributes_for :links }
 
   it_behaves_like 'likable'
+  it_behaves_like 'commentable'
 
   describe '#set_best' do
     let!(:user) { create(:user) }

@@ -36,6 +36,14 @@ div class="question-#{question.id}"
         = image_tag question.badge.image, title: question.badge.title, size: "50x50"
         p = question.badge.title
 
+    - if current_user
+      = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: question.class.to_s.downcase, id: question.id }
+      = render 'comments/form', resource: question
+
+    .comments
+      p Comments:
+      = render question.comments
+
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title
   = f.text_field :title, class: 'form-control'

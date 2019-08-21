@@ -1,0 +1,10 @@
+var errors = $('.comment-errors')
+<% if @comment.errors.present? %>
+  errors.html('<%= render 'shared/errors', resource: @comment %>');
+<% else %>
+  errors.html('');
+  $('.<%= "#{@comment.commentable_type.downcase}-#{@comment.commentable_id}" %> .comments').append('<%= j render @comment %>');
+  $('textarea#comment_body.form-control').val('')
+  $('.comment-form').hide()
+  $('.new-comment-link').show()
+<% end %>
