@@ -12,6 +12,7 @@ gem 'rails', '~> 5.2.3'
 gem 'sass-rails', '~> 5.0'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
+gem "nokogiri", ">= 1.10.4"
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -41,7 +42,9 @@ gem 'bootstrap', '~> 4.3.1'
 gem 'cocoon'
 gem 'devise'
 gem 'dotenv-rails'
+gem 'gon'
 gem 'jquery-rails'
 gem 'launchy'
 gem 'octokit', '~> 4.0'
+gem 'skim'
 gem 'slim-rails'

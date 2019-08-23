@@ -1,0 +1,3 @@
+div class = "comment-#{@comment.id}"
+  span= "#{@user_email}: "
+  span= @comment.body

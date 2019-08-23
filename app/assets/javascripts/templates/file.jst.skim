@@ -1,0 +1,3 @@
+div class = "attachment-#{@file.id}"
+  p
+    a href=@file.url = @file.name

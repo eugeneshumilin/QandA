@@ -1,0 +1,14 @@
+= @answer.body
+
+- if @files.count != 0
+    - for file in @files
+      == JST['templates/file'] file: file
+
+- if @links.count != 0
+  .links
+    p Links:
+    ul
+      - for link in @links
+        == JST['templates/link'] link: link
+
+== JST['templates/vote'] rating: @rating

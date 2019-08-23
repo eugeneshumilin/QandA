@@ -1,40 +1,48 @@
-/ li.list-group-item
 div class="question-#{question.id}"
-  h4 = link_to  question.title, question_path(question)
-  p = question.body
-  - if current_user&.author_of?(question)
-    = link_to 'Delete', question_path(question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'card-link btn btn-outline-danger btn-sm'
-    = link_to 'Edit', '#', class: 'edit-question-link card-link btn btn-outline-primary btn-sm', data: { question_id: question.id }
-  .attachments
-    - if question.files.attached?
-      - question.files.each do |file|
-        div class = "attachment-#{file.id}"
-          = link_to file.filename.to_s, url_for(file), class: 'card-link'
-          -if current_user&.author_of?(question)
-            = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link badge badge-light', remote: true, method: :delete
-
-  .vote
-    = render 'shared/vote', resource: question
-
-  .links
-    p Links:
-    ul
-      - question.links.each do |link|
-        div class = "link-#{link.id}"
-          - if link.gist?
-            = link.gist_content
-          - else
-            li= link_to link.name, link.url, target: :blank
-
-          div class = "delete-link-#{link.id}"
+  .question-item data-id = "#{question.id}"
+    h4 = link_to  question.title, question_path(question)
+    p = question.body
+    - if current_user&.author_of?(question)
+      = link_to 'Delete', question_path(question), method: :delete, data: {confirm: 'Are you sure?'}, class: 'card-link btn btn-outline-danger btn-sm'
+      = link_to 'Edit', '#', class: 'edit-question-link card-link btn btn-outline-primary btn-sm', data: { question_id: question.id }
+    .attachments
+      - if question.files.attached?
+        - question.files.each do |file|
+          div class = "attachment-#{file.id}"
+            = link_to file.filename.to_s, url_for(file), class: 'card-link'
             -if current_user&.author_of?(question)
-              = link_to 'remove', link_path(link), class: 'delete-link', remote: true, method: :delete
+              = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link badge badge-light', remote: true, method: :delete
 
-  - if question.badge.present?
-    .badge
-      p Badge:
-      = image_tag question.badge.image, title: question.badge.title, size: "50x50"
-      p = question.badge.title
+    .vote
+      = render 'shared/vote', resource: question
+
+    .links
+      p Links:
+      ul
+        - question.links.each do |link|
+          div class = "link-#{link.id}"
+            - if link.gist?
+              = link.gist_content
+            - else
+              li= link_to link.name, link.url, target: :blank
+
+            div class = "delete-link-#{link.id}"
+              -if current_user&.author_of?(question)
+                = link_to 'remove', link_path(link), class: 'delete-link', remote: true, method: :delete
+
+    - if question.badge.present?
+      .badge
+        p Badge:
+        = image_tag question.badge.image, title: question.badge.title, size: "50x50"
+        p = question.badge.title
+
+    - if current_user
+      = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: question.class.to_s.downcase, id: question.id }
+      = render 'comments/form', resource: question
+
+    .comments
+      p Comments:
+      = render question.comments
 
 = form_with model: question, class: 'form-group hidden', html: { id: "edit-question-#{question.id}" } do |f|
   = f.label :title
