@@ -13,6 +13,11 @@ feature 'User sign up', '
     fill_in 'Password confirmation', with: '12345678'
     click_button 'Sign up'
 
-    expect(page).to have_content 'Welcome! You have signed up successfully.'
+    expect(page).to have_content 'A message with a confirmation link has been sent to your email address.'
+
+    open_email('testuser@email.com')
+    current_email.click_link 'Confirm my account'
+
+    expect(page).to have_content('Your email address has been successfully confirmed.')
   end
 end

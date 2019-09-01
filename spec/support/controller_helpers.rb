@@ -25,4 +25,12 @@ module ControllerHelpers
       create(model.to_s.underscore.to_sym, user: user)
     end
   end
+
+  def mock_oauth(provider, email = nil)
+    request.env['omniauth.auth'] = OmniAuth::AuthHash.new(
+      provider: provider.to_s,
+      uid: '123',
+      info: { email: email }
+    )
+  end
 end
