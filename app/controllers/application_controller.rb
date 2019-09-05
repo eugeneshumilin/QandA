@@ -7,4 +7,10 @@ class ApplicationController < ActionController::Base
       redirect_to set_email_user_path(current_user)
     end
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, alert: exception.message
+  end
+
+  check_authorization unless: :devise_controller?
 end

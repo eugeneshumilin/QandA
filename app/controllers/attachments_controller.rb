@@ -2,12 +2,10 @@ class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_attachment
 
+  authorize_resource
+
   def destroy
-    if current_user.author_of?(@attachment.record)
-      @attachment.purge
-    else
-      redirect_to @attachment.record
-    end
+    @attachment.purge
   end
 
   private
