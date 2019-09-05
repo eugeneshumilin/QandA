@@ -1,5 +1,5 @@
 class OauthCallbacksController < Devise::OmniauthCallbacksController
-  before_action :call
+  before_action :sign_in_with_oauth
 
   def github;end
 
@@ -7,7 +7,7 @@ class OauthCallbacksController < Devise::OmniauthCallbacksController
 
   private
 
-  def call
+  def sign_in_with_oauth
     @auth = request.env['omniauth.auth']
     @user = User.find_for_oauth(@auth)
 
