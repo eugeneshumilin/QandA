@@ -53,26 +53,26 @@ describe Ability, type: :model do
 
     it { should be_able_to :update, question }
     it { should be_able_to :update, answer }
-    it { should be_able_to :update, comment, user: user }
+    it { should be_able_to :update, comment}
     it { should_not be_able_to :update, other_question }
     it { should_not be_able_to :update, other_answer }
-    it { should_not be_able_to :update, other_comment, user: user }
+    it { should_not be_able_to :update, other_comment }
 
-    it { should be_able_to :destroy, question, user: user }
-    it { should be_able_to :destroy, answer, user: user }
-    it { should be_able_to :destroy, link, user: user }
-    it { should be_able_to :destroy, question.files.last, user: user }
-    it { should_not be_able_to :destroy, other_question, user: user }
-    it { should_not be_able_to :destroy, other_answer, user: user }
-    it { should_not be_able_to :destroy, other_link, user: user }
-    it { should_not be_able_to :destroy, other_question.files.last, user: user }
+    it { should be_able_to :destroy, question }
+    it { should be_able_to :destroy, answer}
+    it { should be_able_to :destroy, link }
+    it { should be_able_to :destroy, question.files.last}
+    it { should_not be_able_to :destroy, other_question }
+    it { should_not be_able_to :destroy, other_answer }
+    it { should_not be_able_to :destroy, other_link }
+    it { should_not be_able_to :destroy, other_question.files.last }
 
-    it { should be_able_to [:vote_up, :vote_down], other_question, user: user }
-    it { should be_able_to [:vote_up, :vote_down], other_answer, user: user }
-    it { should_not be_able_to [:vote_up, :vote_down], question, user: user }
-    it { should_not be_able_to [:vote_up, :vote_down], answer, user: user }
+    it { should be_able_to [:vote_up, :vote_down], other_question }
+    it { should be_able_to [:vote_up, :vote_down], other_answer }
+    it { should_not be_able_to [:vote_up, :vote_down], question }
+    it { should_not be_able_to [:vote_up, :vote_down], answer }
 
-    it { should be_able_to :set_best, answer, user: user }
-    it { should_not be_able_to :set_best, other_answer, user: user }
+    it { should be_able_to :set_best, answer }
+    it { should_not be_able_to :set_best, other_answer }
   end
 end
