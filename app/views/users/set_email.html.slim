@@ -1,0 +1,7 @@
+.set-email
+  h2 Email comfirmation
+  h3 Input your email for sending confirmation
+  = form_with model: current_user, url: confirm_email_user_path(current_user), local: true do |f|
+  	= render 'shared/errors', resource: current_user
+	= f.text_field :email, class: 'form-control', autofocus: true
+	= f.submit 'Send confirmation'

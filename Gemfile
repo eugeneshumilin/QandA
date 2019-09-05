@@ -18,6 +18,8 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 3.8'
+  gem 'capybara-email'
+  gem 'letter_opener'
 end
 
 group :development do
@@ -48,3 +50,6 @@ gem 'launchy'
 gem 'octokit', '~> 4.0'
 gem 'skim'
 gem 'slim-rails'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-vkontakte'
