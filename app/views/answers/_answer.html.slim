@@ -1,15 +1,19 @@
 div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
   h4 = answer.body
-  - if current_user&.author_of?(answer)
+  - if can?(:destroy, answer)
     = link_to 'Delete answer', answer_path(answer), method: :delete, data: {confirm: 'Are you sure?', remote: true}, class: 'delete-answer-link card-link btn btn-outline-danger btn-sm'
+
+  - if can?(:update, answer)
     = link_to 'Edit', '#', class: 'edit-answer-link card-link btn btn-outline-primary btn-sm', data: { answer_id: answer.id }
-  - if current_user&.author_of?(answer.question) && !answer.is_best
+
+  - if can?(:set_best, answer) && !answer.is_best?
     = link_to 'best answer', set_best_answer_path(answer), method: :patch, class: "best-answer-link badge badge-pill badge-secondary card-link", data: { answer_id: answer.id }, remote: true
-  -if answer.files.attached?
+
+  - if answer.files.attached?
     - answer.files.each do |file|
       div class = "attachment-#{file.id}"
         = link_to file.filename.to_s, url_for(file)
-        - if current_user&.author_of?(answer)
+        - if can?(:destroy, answer)
           = link_to 'Remove file', attachment_path(file), class: 'delete-attachment-link badge badge-light', remote: true, method: :delete
   .links
     p Links:
@@ -22,16 +26,16 @@ div class="answer-#{answer.id} #{add_class_to_best_answer(answer)}"
             li= link_to link.name, link.url, target: :blank
 
           div class = "delete-link-#{link.id}"
-            - if current_user&.author_of?(answer)
+            - if can?(:destroy, answer)
               = link_to 'remove', link_path(link), class: 'delete-link', remote: true, method: :delete
 
 
   .vote
     = render 'shared/vote', resource: answer
 
-  - if current_user
-      = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: answer.class.to_s.downcase, id: answer.id }
-      = render 'comments/form', resource: answer
+  - if can?(:create, answer)
+    = link_to 'New comment', '#', class: 'new-comment-link', data: { klass: answer.class.to_s.downcase, id: answer.id }
+    = render 'comments/form', resource: answer
 
   .comments
     p Comments:

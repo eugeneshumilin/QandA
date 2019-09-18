@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
   after_action :publish_answer, only: :create
   before_action :init_comment, only: %i[create update set_best]
 
+  authorize_resource
+
   def create
     @answer = @question.answers.build(answer_params)
     @answer.user = current_user

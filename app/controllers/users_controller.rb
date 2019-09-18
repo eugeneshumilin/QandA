@@ -3,6 +3,8 @@ class UsersController < ApplicationController
   before_action :check_email, only: %i[set_email confirm_email]
   skip_before_action :check_email_for_update, only: %i[set_email confirm_email]
 
+  skip_authorization_check
+
   def set_email;end
 
   def confirm_email
