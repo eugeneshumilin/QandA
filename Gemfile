@@ -35,6 +35,7 @@ group :test do
   gem 'selenium-webdriver'
   gem 'shoulda-matchers'
   gem 'webdrivers', '~> 3.0'
+  gem 'json_spec'
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
@@ -57,3 +58,4 @@ gem 'cancancan'
 gem 'doorkeeper'
 gem 'active_model_serializers', '~> 0.10'
 gem 'oj'
+
