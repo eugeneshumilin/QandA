@@ -1,6 +1,4 @@
-class AnswerShowSerializer < ActiveModel::Serializer
-  attributes :id, :body, :user_id, :created_at, :updated_at
-
+class AnswerShowSerializer < AnswerSerializer
   has_many :comments
   has_many :files, serializer: FileSerializer
   has_many :links

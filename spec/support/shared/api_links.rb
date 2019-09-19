@@ -1,6 +1,6 @@
 shared_examples_for 'API links' do
   context 'links' do
-    let(:link) { links.last }
+    let(:link) { links.first }
     let(:links_response) { object_response['links'] }
     let(:link_response) { links_response.first }
 

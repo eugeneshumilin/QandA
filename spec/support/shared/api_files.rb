@@ -2,7 +2,7 @@ shared_examples_for 'API files' do
   include Rails.application.routes.url_helpers
 
   context 'files' do
-    let(:file) { item.files.first.blob }
+    let(:file) { item.files.first }
     let(:files_response) { object_response['files'] }
     let(:file_response) { files_response.first }
 

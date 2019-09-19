@@ -1,9 +1,8 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-  before_action :current_resource_owner, only: :create
   before_action :find_question, only: %i[index create]
   before_action :find_answer, only: %i[show update destroy]
 
-  authorize_resource Answer
+  authorize_resource
 
   def index
     render json: @question.answers
@@ -16,30 +15,20 @@ class Api::V1::AnswersController < Api::V1::BaseController
 
   def update
     if @answer.update(answer_params)
-      render json: 'your answer successfully updated'
+      render json: @answer, serializer: AnswerShowSerializer
     else
-      payload = {
-          error: 'invalid params',
-          status: 400
-      }
-
-      render json: payload, status: :bad_request
+      render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def create
     @answer = @question.answers.new(answer_params)
-    @answer.user = @current_resource_owner
+    @answer.user = current_resource_owner
 
     if @answer.save
-      render json: 'your answer successfully created'
+      render json: @answer, serializer: AnswerShowSerializer
     else
-      payload = {
-          error: 'invalid params',
-          status: 400
-      }
-
-      render json: payload, status: :bad_request
+      render json: { errors: @answer.errors.full_messages }, status: :unprocessable_entity
     end
   end
 

@@ -45,6 +45,6 @@ class Ability
       resource.likes.find_by(user_id: user.id)
     end
 
-    can :me, User
+    can :me, User, id: user.id
   end
 end
