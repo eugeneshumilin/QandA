@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       end
 
       resources :questions, shallow: true, only: %i[index show] do
-        resources :answers, only: %i[index]
+        resources :answers, only: %i[index show]
       end
     end
   end
