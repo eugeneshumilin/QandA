@@ -23,7 +23,7 @@ describe 'Question API', type: :request do
       let!(:links) { create_list(:link, 3, linkable: question) }
       before { 3.times { attach_file_to(question) } }
 
-      let(:question_response) { json['question'] }
+      let(:object_response) { json['question'] }
 
       before { get "/api/v1/questions/#{question.id}", params: { access_token: access_token.token }, headers: headers }
 
@@ -33,58 +33,16 @@ describe 'Question API', type: :request do
 
       it 'returns all question public fields' do
         %w[id title body user_id created_at updated_at].each do |attr|
-          expect(question_response[attr]).to eq question.send(attr).as_json
+          expect(object_response[attr]).to eq question.send(attr).as_json
         end
       end
 
-      context 'comments' do
-        let(:comment) { comments.last }
-        let(:comments_response) { question_response['comments'] }
-        let(:comment_response) { comments_response.first }
+      it_behaves_like 'API comments'
 
-        it 'return list of comments' do
-          expect(comments_response.size).to eq comments.size
-        end
+      it_behaves_like 'API links'
 
-        it 'returns all public fields' do
-          %w[id body created_at updated_at].each do |attr|
-            expect(comment_response[attr]).to eq comment.send(attr).as_json
-          end
-        end
-      end
-
-      context 'links' do
-        let(:link) { links.last }
-        let(:links_response) { question_response['links'] }
-        let(:link_response) { links_response.first }
-
-        it 'return list of links' do
-          expect(links_response.size).to eq links.size
-        end
-
-        it 'returns all public fields' do
-          %w[id name url created_at updated_at].each do |attr|
-            expect(link_response[attr]).to eq link.send(attr).as_json
-          end
-        end
-      end
-
-      context 'files' do
-        let(:file) { question.files.first.blob }
-        let(:files_response) { question_response['files'] }
-        let(:file_response) { files_response.first }
-
-        it 'return list of files' do
-          expect(files_response.size).to eq question.files.size
-        end
-
-        it 'returns all public fields' do
-          %w[id filename].each do |attr|
-            expect(file_response[attr]).to eq file.send(attr).as_json
-          end
-        end
-
-        it 'contains link to file'
+      it_behaves_like 'API files' do
+        let(:item) { question }
       end
     end
   end
